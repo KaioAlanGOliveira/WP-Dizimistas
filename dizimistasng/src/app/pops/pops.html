@@ -1,0 +1,81 @@
+<!-- O p-dialog escuta o fechamento e avisa o pai via (onHide) -->
+<p-dialog header="Formulário de cadastro dos Fieis" [(visible)]="visivel" (onHide)="fecharModal()" [modal]="true"
+  [style]="{ width: '90vw', height: '90vh' }">
+
+
+  <!-- Envolvemos tudo em um formulário reativo -->
+  <form [formGroup]="formularioFiel" (ngSubmit)="sumeterFiel()">
+
+    <div class="card flex justify-center">
+      <div class="flex flex-col gap-4">
+
+        <!-- Mostra erro geral se o formulário foi enviado/tocado e está inválido -->
+        @if (formularioFiel.invalid && formularioFiel.touched) {
+        <p-message severity="error" icon="pi pi-times-circle" styleClass="mb-2">A validação falhou!</p-message>
+        }
+
+        <!-- CPF -->
+        <div class="flex flex-col gap-1">
+          <p-inputmask mask="999.999.999-99" formControlName="cpf" placeholder="CPF"
+            [invalid]="formularioFiel.get('cpf')?.invalid && formularioFiel.get('cpf')?.touched" />
+          @if (formularioFiel.get('cpf')?.invalid && formularioFiel.get('cpf')?.touched) {
+          <p-message severity="error" variant="simple" size="small">O CPF é obrigatório ou está inválido</p-message>
+          }
+        </div>
+
+        <!-- Gmail (E-mail) -->
+        <div class="flex flex-col gap-1">
+          <input pInputText type="email" formControlName="email" placeholder="Gmail"
+            [invalid]="formularioFiel.get('email')?.invalid && formularioFiel.get('email')?.touched" />
+          @if (formularioFiel.get('email')?.invalid && formularioFiel.get('email')?.touched) {
+          <p-message severity="error" variant="simple" size="small">E-mail inválido</p-message>
+          }
+        </div>
+
+        <!-- Idade -->
+        <div class="flex flex-col gap-1">
+          <p-inputmask mask="999" formControlName="idade" placeholder="Idade"
+            [invalid]="formularioFiel.get('idade')?.invalid && formularioFiel.get('idade')?.touched" />
+          @if (formularioFiel.get('idade')?.invalid && formularioFiel.get('idade')?.touched) {
+          <p-message severity="error" variant="simple" size="small">A idade deve ser entre 0 e 120 anos</p-message>
+          }
+        </div>
+
+        <!-- Nome -->
+        <div class="flex flex-col gap-1">
+          <input pInputText placeholder="Nome" formControlName="nome" aria-label="nome"
+            [invalid]="formularioFiel.get('nome')?.invalid && formularioFiel.get('nome')?.touched" />
+          @if (formularioFiel.get('nome')?.invalid && formularioFiel.get('nome')?.touched) {
+          <p-message severity="error" variant="simple" size="small">O nome é obrigatório (mínimo 3 letras)</p-message>
+          }
+        </div>
+
+        <!-- Telefone -->
+        <div class="flex flex-col gap-1">
+          <!-- Ajustei a máscara para aceitar celulares de 9 dígitos de forma flexível se precisar -->
+          <p-inputmask mask="(99) 99999-9999" formControlName="telefone" placeholder="Telefone"
+            [invalid]="formularioFiel.get('telefone')?.invalid && formularioFiel.get('telefone')?.touched" />
+          @if (formularioFiel.get('telefone')?.invalid && formularioFiel.get('telefone')?.touched) {
+          <p-message severity="error" variant="simple" size="small">O número de telefone está inválido</p-message>
+          }
+        </div>
+
+        <p-button label="Enviar" type="button" (onClick)="sumeterFiel()" severity="danger"></p-button>
+      </div>
+    </div>
+
+    <!-- Rodapé com botões de Ação -->
+    <ng-template pTemplate="footer">
+      <div class="flex justify-end gap-2 mt-4">
+        <p-button label="Fechar" type="button" (onClick)="fecharModal()" severity="danger"></p-button>
+        <p-button label="Salvar" type="submit" severity="success"></p-button>
+      </div>
+    </ng-template>
+
+  </form>
+
+  <ng-template pTemplate="footer">
+    <p-button label="Fechar" (onClick)="fecharModal()" severity="danger"></p-button>
+  </ng-template>
+
+</p-dialog>

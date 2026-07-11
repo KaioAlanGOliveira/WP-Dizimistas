@@ -1,0 +1,46 @@
+<link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+<div class="topo-fiel">
+    <p-button class="p-but" label="<" (onClick)="irParaTelaInicial()"></p-button>
+</div>
+
+<div class="pagina-fiel">
+    <div class="card-fiel">
+        <div class="titulo">
+            <h1>Cadastro de Fiéis</h1>
+            <p>Gerenciamento dos membros cadastrados.</p>
+        </div>
+
+        <div class="barra-superior">
+            <div class="campo-busca">
+                <label for="buscar">Buscar Fiel</label>
+                <!-- Ajustado para ler o value diretamente em tempo real -->
+                <input id="buscar" type="text" class="inpBuscar" placeholder="Digite o nome ou CPF" #inputNome
+                    (input)="pesquisar(inputNome.value)" (keyup.enter)="pesquisar(inputNome.value)">
+            </div>
+
+            <!-- Passa o valor do input corretamente -->
+            <button class="btnPesquisar" (click)="pesquisar(inputNome.value)">
+                Pesquisar
+            </button>
+            <p-button    styleClass="btn" icon="pi pi-plus" label="Novo Fiel" (onClick)="abrirMeuPopup()">
+            </p-button>
+        </div>
+
+        <div class="lista-fieis">
+            <!-- CORREÇÃO: Agora percorre a lista filtrada -->
+            @for (fiel of fieisFiltrados; track fiel.cpf) {
+            <div class="item-fiel">
+                <div class="nome">{{ fiel.nome }}</div>
+                <div>{{ fiel.cpf }}</div>
+                <div>{{ fiel.telefone }}</div>
+                <div>{{ fiel.email }}</div>
+                <div>{{ fiel.cidade }}</div>
+            </div>
+            }
+        </div>
+    </div>
+</div>
+
+<app-pops
+    [(visivel)]="exibirModalPrincipal">
+</app-pops>

@@ -1,0 +1,108 @@
+/* Página */
+.home-container {
+    height: 100vh; /* Força o contentor a ter exatamente a altura da tela */
+    min-height: 100vh;
+    display: flex;
+    justify-content: start; /* Centraliza o card horizontalmente */
+    align-items: stretch; /* Força os filhos (o card) a esticarem na vertical */
+    background: #0f0f0f;
+}
+
+/* Card */
+.home-card {
+    width: 500px;
+    height: 100%; /* Faz o card ocupar 100% da altura do pai */
+    box-sizing: border-box; /* Garante que o padding não quebre a altura */
+    padding: 45px;
+    background: #181818;
+    border: 1px solid #caa24a;
+    border-radius: 0px; /* Opcional: remove arredondamento nas bordas que tocam o ecrã */
+    box-shadow: 0 0 25px rgba(202,162,74,.20);
+    text-align: center;
+    
+    /* Permite alinhar o conteúdo interno verticalmente se desejar */
+    display: flex;
+    flex-direction: column;
+    justify-content: center; 
+}
+
+
+/* Título */
+
+.home-card h1 {
+
+    color: #d8b55b;
+
+    margin-bottom: 10px;
+
+    font-size: 32px;
+
+}
+
+.home-card p {
+
+    color: #d4d4d4;
+
+    margin-bottom: 35px;
+
+}
+
+/* Botões */
+
+.button-container {
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 18px;
+
+}
+
+/* PrimeNG */
+
+.p-but {
+
+    width: 100%;
+
+}
+
+.p-but .p-button {
+
+    width: 100%;
+
+    justify-content: center;
+
+    padding: 16px;
+
+    font-size: 17px;
+
+    font-weight: 600;
+
+    border-radius: 12px;
+
+    background: #caa24a !important;
+
+    border: none !important;
+
+    color: #111 !important;
+
+    transition: .25s;
+
+}
+
+.p-but .p-button:hover {
+
+    background: #e7c66d !important;
+
+    transform: translateY(-3px);
+
+    box-shadow: 0 6px 18px rgba(202, 162, 74, .35);
+
+}
+
+.p-but .p-button-icon {
+
+    font-size: 20px;
+
+}

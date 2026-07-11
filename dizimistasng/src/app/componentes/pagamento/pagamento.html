@@ -1,0 +1,53 @@
+<link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+<div class="pagina-fiel">
+
+    <div class="card-fiel">
+
+        <div class="titulo">
+            <h1>Cadastro de Fiéis</h1>
+            <p>Gerenciamento dos membros cadastrados.</p>
+        </div>
+
+        <div class="barra-superior">
+
+            <div class="campo-busca">
+                <label for="buscar">Buscar Fiel</label>
+                <input id="buscar" type="text" class="inpBuscar" placeholder="Digite o nome ou CPF">
+            </div>
+
+            <button class="btnCadastrar">
+                Pesquisar
+            </button>
+            <button class="btnCadastrar">
+                Cadastrar
+            </button>
+
+        </div>
+
+        <div class="lista-fieis">
+
+            @for (fiel of fieis; track fiel.cpf) {
+
+            <div class="item-fiel">
+
+                <div class="nome">
+                    {{ fiel.nome }}
+                </div>
+
+                <div>{{ fiel.cpf }}</div>
+
+                <div>{{ fiel.telefone }}</div>
+
+                <div>{{ fiel.email }}</div>
+
+                <div>{{ fiel.cidade }}</div>
+
+            </div>
+
+            }
+
+        </div>
+
+    </div>
+
+</div>
