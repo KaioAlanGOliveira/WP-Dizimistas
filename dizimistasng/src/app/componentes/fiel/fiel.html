@@ -29,7 +29,7 @@
         <div class="lista-fieis">
             <!-- CORREÇÃO: Agora percorre a lista filtrada -->
             @for (fiel of fieisFiltrados; track fiel.cpf) {
-            <div class="item-fiel">
+            <div class="item-fiel" (dblclick)="editar(fiel)">
                 <div class="nome">{{ fiel.nome }}</div>
                 <div>{{ fiel.cpf }}</div>
                 <div>{{ fiel.telefone }}</div>
@@ -42,5 +42,6 @@
 </div>
 
 <app-pops
-    [(visivel)]="exibirModalPrincipal">
+    [(visivel)]="exibirModalPrincipal"
+    [fielSelecionado]="fielSelecionado">
 </app-pops>

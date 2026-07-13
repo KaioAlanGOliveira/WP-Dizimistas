@@ -1,10 +1,10 @@
 import {
-  withHttpTransferCache
-} from "./chunk-XDVBXMUA.js";
-import {
   EVENT_MANAGER_PLUGINS,
   EventManagerPlugin
 } from "./chunk-KVRQMTE4.js";
+import {
+  withHttpTransferCache
+} from "./chunk-XDVBXMUA.js";
 import {
   getDOM
 } from "./chunk-RHGUPR7G.js";
@@ -658,4 +658,4 @@ export {
   provideClientHydration,
   VERSION
 };
-//# sourceMappingURL=chunk-BC5GKI4O.js.map
+//# sourceMappingURL=chunk-RQABKMD2.js.map

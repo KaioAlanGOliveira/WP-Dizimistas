@@ -19,6 +19,14 @@ import { Pops } from '../../pops/pops';
 })
 export class Fiel implements OnInit {
 
+  fielSelecionado!: FielList;
+
+  editar(fiel: FielList) {
+    this.abrirMeuPopup();
+    this.formularioFiel.patchValue(fiel);
+    this.fielSelecionado = fiel;
+  }
+
   // Começa falso para o pop-up iniciar fechado
   exibirModalPrincipal: boolean = false;
 
@@ -41,13 +49,13 @@ export class Fiel implements OnInit {
   ngOnInit() {
 
     console.log(this.fieis);
-     this.formularioFiel = this.fb.group({
-       cpf: ['', [Validators.required, Validators.pattern(/^\d{3}\.\d{3}\.\d{3}-\d{2}$/)]],
-       nome: ['', [Validators.required, Validators.minLength(3)]],
-       email: ['', [Validators.email]],
-       idade: [null, [Validators.min(0), Validators.max(120)]],
-       telefone: ['', [Validators.pattern(/^\(\d{2}\)\s\d{4,5}-\d{4}$/)]]
-     });
+    this.formularioFiel = this.fb.group({
+      cpf: ['', [Validators.required, Validators.pattern(/^\d{3}\.\d{3}\.\d{3}-\d{2}$/)]],
+      nome: ['', [Validators.required, Validators.minLength(3)]],
+      email: ['', [Validators.email]],
+      idade: [null, [Validators.min(0), Validators.max(120)]],
+      telefone: ['', [Validators.pattern(/^\(\d{2}\)\s\d{4,5}-\d{4}$/)]]
+    });
     this.carregarFieis();
   }
 
@@ -84,6 +92,7 @@ export class Fiel implements OnInit {
 
   abrirMeuPopup() {
     this.exibirModalPrincipal = true;
+
   }
 
 }

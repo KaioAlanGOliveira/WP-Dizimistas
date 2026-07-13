@@ -1,0 +1,52 @@
+.container { 
+  display: grid; 
+  grid-template-columns: 1fr 180px; 
+  gap: 20px; 
+} 
+
+.campos { 
+  display: grid; 
+  grid-template-columns: 1fr 1fr; 
+  gap: 15px; 
+} 
+
+.mensagem, .nome { 
+  grid-column: 1 / -1; 
+} 
+
+/* Alinha os botões a partir do topo do bloco da direita */
+.acoes { 
+  display: flex; 
+  flex-direction: column; 
+  gap: 15px; 
+  justify-content: flex-start; 
+} 
+/* --- PALETA DE CORES DOS BOTÕES --- */
+
+/* Botão Principal / Sucesso (Salvar, Novo) */
+:host ::ng-deep .btnSalvar .p-button,
+:host ::ng-deep .btnNovo .p-button {
+    background: #caa24a !important;
+    border-color: #caa24a !important;
+    color: #000000 !important;
+}
+
+/* Hover do Botão Principal (Dourado mais claro) */
+:host ::ng-deep .btnSalvar .p-button:hover,
+:host ::ng-deep .btnNovo .p-button:hover {
+    background: #e0ba67 !important;
+    border-color: #e0ba67 !important;
+}
+
+/* Botão de Cancelar / Fechar (Tom neutro/escuro para contraste) */
+:host ::ng-deep .btnCancelar .p-button {
+    background: #333333 !important;
+    border-color: #333333 !important;
+    color: #ffffff !important;
+}
+
+/* Hover do Botão Cancelar */
+:host ::ng-deep .btnCancelar .p-button:hover {
+    background: #444444 !important;
+    border-color: #444444 !important;
+}

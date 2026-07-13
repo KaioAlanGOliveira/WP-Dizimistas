@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter, inject } from '@angular/core';
+import { Component, Input, Output, EventEmitter, inject, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { DialogModule } from 'primeng/dialog';
 import { ButtonModule } from 'primeng/button';
@@ -9,20 +9,22 @@ import { InputTextModule } from 'primeng/inputtext';
 import { FielList } from '../domain/FielList.model';
 import { FielService } from '../service/fiel.service';
 import { error } from 'console';
+import { InputNumber } from "primeng/inputnumber";
+import { Fiel } from '../componentes/fiel/fiel';
 
 @Component({
   selector: 'app-pops',
   standalone: true,
-  imports: [ReactiveFormsModule, CommonModule, DialogModule, ButtonModule, InputMaskModule, MessageModule, InputTextModule, FormsModule],
+  imports: [ReactiveFormsModule, CommonModule, DialogModule, ButtonModule, InputMaskModule, MessageModule, InputTextModule, FormsModule, InputNumber],
   templateUrl: './pops.html',
   styleUrl: './pops.css'
 })
-export class Pops {
-
+export class Pops implements OnChanges, OnInit {
   fieis: FielList[] = [];
   fieisFiltrados: any[] = [];
   formularioFiel!: FormGroup;
 
+  @Input() fielSelecionado: FielList | null = null;
   @Output() visivelChange = new EventEmitter<boolean>();
   @Input() visivel = false;
 
@@ -33,7 +35,12 @@ export class Pops {
   ngOnInit() {
     this.carregarFieis();
 
-    console.log(this.fieis);
+    if (this.fielSelecionado) {
+      this.formularioFiel.patchValue(this.fielSelecionado);
+    }
+
+
+
     this.formularioFiel = this.fb.group({
       cpf: ['', [Validators.required, Validators.pattern(/^\d{3}\.\d{3}\.\d{3}-\d{2}$/)]],
       nome: ['', [Validators.required, Validators.minLength(3)]],
@@ -41,8 +48,16 @@ export class Pops {
       idade: [null, [Validators.min(0), Validators.max(120)]],
       telefone: ['', [Validators.pattern(/^\(\d{2}\)\s\d{4,5}-\d{4}$/)]]
     });
+
+
   }
 
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['fielSelecionado'] && this.formularioFiel && this.fielSelecionado) {
+      this.formularioFiel.patchValue(this.fielSelecionado);
+    }
+  }
   carregarFieis() {
     this.fielService.listarTodos().subscribe({
       next: (dados) => {
@@ -70,12 +85,12 @@ export class Pops {
 
   sumeterFiel() {
     if (this.formularioFiel.valid) {
-     const novoFiel: FielList = {
-      ...this.formularioFiel.value,
-      cpf: this.removerMascaras(this.formularioFiel.value.cpf),
-      telefone: this.removerMascaras(this.formularioFiel.value.telefone),
-      idade: this.removerMascaras(this.formularioFiel.value.idade)
-    };
+      const novoFiel: FielList = {
+        ...this.formularioFiel.value,
+        cpf: this.removerMascaras(this.formularioFiel.value.cpf),
+        telefone: this.removerMascaras(this.formularioFiel.value.telefone),
+        idade: this.formularioFiel.value.idade
+      };
 
       this.fielService.salvarFiel(novoFiel).subscribe({
         next: (resposta) => {
@@ -90,6 +105,30 @@ export class Pops {
       });
     } else {
       this.formularioFiel.markAllAsTouched();
+    }
+  }
+
+  editarFiel() {
+    if (this.formularioFiel.valid && this.fielSelecionado) {
+
+      const fielAtualizado: FielList = {
+        ...this.fielSelecionado,          // mantém os campos que não estão no formulário
+        ...this.formularioFiel.value,     // pega os valores alterados
+        cpf: this.removerMascaras(this.formularioFiel.value.cpf),
+        telefone: this.removerMascaras(this.formularioFiel.value.telefone)
+      };
+
+      this.fielService.editarFiel(fielAtualizado).subscribe({
+        next: (resposta) => {
+          console.log('Fiel atualizado com sucesso!', resposta);
+          this.carregarFieis();
+          this.formularioFiel.reset();
+          this.fecharModal();
+        },
+        error: (err) => {
+          console.error('Erro ao atualizar fiel:', err);
+        }
+      });
     }
   }
 }

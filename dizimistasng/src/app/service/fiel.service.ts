@@ -8,10 +8,14 @@ import { FielList } from '../domain/FielList.model';
 })
 export class FielService {
 
-  private apiUrl = 'http://26.143.248.8:8080/dizimistassrv/api/fiel';
-  private apiUrl2 = 'http://localhost:8080/dizimistassrv/api/fiel';
+  private apiUrl2 = 'http://26.143.248.8:8080/dizimistassrv/api/fiel';
+  private apiUrl = 'http://localhost:8080/dizimistassrv/api/fiel';
 
   constructor(private http: HttpClient) { }
+
+  editarFiel(fiel: FielList) {
+    return this.http.put(this.apiUrl, fiel);
+  }
 
   salvarFiel(fiel: FielList): Observable<FielList> {
     return this.http.post<FielList>(this.apiUrl, fiel);
