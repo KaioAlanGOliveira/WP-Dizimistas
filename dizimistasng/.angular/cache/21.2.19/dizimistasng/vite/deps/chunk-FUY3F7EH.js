@@ -1,13 +1,13 @@
 import {
+  withHttpTransferCache
+} from "./chunk-LY4H7YGN.js";
+import {
   EVENT_MANAGER_PLUGINS,
   EventManagerPlugin
-} from "./chunk-KVRQMTE4.js";
-import {
-  withHttpTransferCache
-} from "./chunk-XDVBXMUA.js";
+} from "./chunk-57R5LEDT.js";
 import {
   getDOM
-} from "./chunk-RHGUPR7G.js";
+} from "./chunk-UUHQANCP.js";
 import {
   ApplicationRef,
   Console,
@@ -658,4 +658,4 @@ export {
   provideClientHydration,
   VERSION
 };
-//# sourceMappingURL=chunk-RQABKMD2.js.map
+//# sourceMappingURL=chunk-FUY3F7EH.js.map

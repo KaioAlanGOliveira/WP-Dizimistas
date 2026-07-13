@@ -106,3 +106,23 @@
     font-size: 20px;
 
 }
+
+
+.button-container{
+    display:flex;
+    justify-content:center;
+    gap:20px;
+    margin:25px 0;
+    width:100%;
+}
+
+.banner-home{
+    display:block;
+    width:100%;
+    max-width:1400px;
+    max-height:1500px;
+    margin:40px auto;
+    border-radius:18px;
+    box-shadow:0 10px 30px rgba(0,0,0,.35);
+    border:2px solid #caa24a;
+}

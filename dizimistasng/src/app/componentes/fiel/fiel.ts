@@ -18,10 +18,12 @@ import { Pops } from '../../pops/pops';
   styleUrl: './fiel.css'
 })
 export class Fiel implements OnInit {
-
+ 
+  alterar: boolean = false;
   fielSelecionado!: FielList;
 
-  editar(fiel: FielList) {
+  selecionado(fiel: FielList) {
+    this.alterar = true;
     this.abrirMeuPopup();
     this.formularioFiel.patchValue(fiel);
     this.fielSelecionado = fiel;
@@ -34,8 +36,8 @@ export class Fiel implements OnInit {
   fieisFiltrados: any[] = []; // Guarda a lista que aparece na tela
 
   constructor(private fielService: FielService) { }
-
   private router = inject(Router);
+
   irParaTelaInicial() {
     this.router.navigate(['/inicio']);
   }
@@ -48,7 +50,6 @@ export class Fiel implements OnInit {
 
   ngOnInit() {
 
-    console.log(this.fieis);
     this.formularioFiel = this.fb.group({
       cpf: ['', [Validators.required, Validators.pattern(/^\d{3}\.\d{3}\.\d{3}-\d{2}$/)]],
       nome: ['', [Validators.required, Validators.minLength(3)]],
@@ -72,7 +73,7 @@ export class Fiel implements OnInit {
   }
 
   // Substitua apenas o método pesquisar por este:
-  pesquisar(termo: string): void {
+  pesquisar(termo: string) {
     // 1. Garante que remove espaços em branco e passa para minúsculas
     const termoBusca = termo ? termo.toLowerCase().trim() : '';
 
@@ -89,10 +90,13 @@ export class Fiel implements OnInit {
     );
   }
 
+   novoFiel() {
+    this.alterar = false;
+    this.exibirModalPrincipal = true;
+  }
 
   abrirMeuPopup() {
     this.exibirModalPrincipal = true;
-
+    this.alterar = true;
   }
-
 }
