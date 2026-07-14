@@ -7,7 +7,7 @@ import { InputMaskModule } from 'primeng/inputmask';
 import { MessageModule } from 'primeng/message';
 import { InputTextModule } from 'primeng/inputtext';
 import { InputNumber } from "primeng/inputnumber";
-import { FielList } from '../domain/FielList.model';
+import { FielList } from '../domain/Fieis.model';
 import { FielService } from '../service/fiel.service';
 
 @Component({

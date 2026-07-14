@@ -7,10 +7,10 @@ import javax.persistence.Query;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
+import br.com.kaio.dizimistassrv.domain.Pagamento;
+import br.com.kaio.dizimistassrv.domain.PagamentoId;
+import br.com.kaio.dizimistassrv.domain.PagamentoView;
 import br.com.kaio.dizimistassrv.persistence.Dao;
-import br.com.kaio.domain.Pagamento;
-import br.com.kaio.domain.PagamentoId;
-import br.com.kaio.domain.PagamentoView;
 
 @Stateless
 public class PagamentoBss {

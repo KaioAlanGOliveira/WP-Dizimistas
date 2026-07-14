@@ -15,9 +15,9 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import br.com.kaio.dizimistassrv.bss.PagamentoBss;
-import br.com.kaio.domain.Pagamento;
-import br.com.kaio.domain.PagamentoId;
-import br.com.kaio.domain.PagamentoView;
+import br.com.kaio.dizimistassrv.domain.Pagamento;
+import br.com.kaio.dizimistassrv.domain.PagamentoId;
+import br.com.kaio.dizimistassrv.domain.PagamentoView;
 
 @Path(value = "/pagamento")
 @Consumes(MediaType.APPLICATION_JSON)

@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { FielList } from '../domain/FielList.model';
+import { FielList } from '../domain/Fieis.model';
 
 @Injectable({
   providedIn: 'root'

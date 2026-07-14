@@ -6,7 +6,7 @@ import { InputMaskModule } from 'primeng/inputmask'; // Para CPF e Telefone
 import { CommonModule } from '@angular/common';
 import { TableModule } from 'primeng/table';
 import { FielService } from '../../service/fiel.service';
-import { FielList } from '../../domain/FielList.model';
+import { FielList } from '../../domain/Fieis.model';
 import { Router } from '@angular/router';
 import { Pops } from '../../popsFiel/pops';
 

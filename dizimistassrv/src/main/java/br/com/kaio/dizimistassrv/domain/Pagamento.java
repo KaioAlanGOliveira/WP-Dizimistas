@@ -1,4 +1,4 @@
-package br.com.kaio.domain;
+package br.com.kaio.dizimistassrv.domain;
 
 import java.math.BigDecimal;
 

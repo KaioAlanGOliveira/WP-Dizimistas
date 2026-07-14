@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { PagamentoList } from '../domain/PagamentoList.model';
+import { Pagamentos } from '../domain/Pagamentos.model';
 
 @Injectable({
   providedIn: 'root'
@@ -13,21 +13,21 @@ export class PagamentoService {
 
   constructor(private http: HttpClient) { }
 
-  apagarPagamento(Pagamento: PagamentoList) {
+  apagarPagamento(Pagamento: Pagamentos) {
     return this.http.delete<{ mensagem: string }>(this.apiUrl, {
       body: Pagamento
     });
   }
 
-  editarPagamento(Pagamento: PagamentoList) {
+  editarPagamento(Pagamento: Pagamentos) {
     return this.http.put(this.apiUrl, Pagamento);
   }
 
-  salvarPagamento(Pagamento: PagamentoList): Observable<PagamentoList> {
-    return this.http.post<PagamentoList>(this.apiUrl, Pagamento);
+  salvarPagamento(Pagamento: Pagamentos): Observable<Pagamentos> {
+    return this.http.post<Pagamentos>(this.apiUrl, Pagamento);
   }
 
-  listarTodos(): Observable<PagamentoList[]> {
-    return this.http.get<PagamentoList[]>(this.apiUrl);
+  listarTodos(): Observable<Pagamentos[]> {
+    return this.http.get<Pagamentos[]>(this.apiUrl);
   }
 }

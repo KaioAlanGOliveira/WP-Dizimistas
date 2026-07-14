@@ -1,0 +1,50 @@
+<p-dialog header="Cadastro de Pagamentos" [(visible)]="visivelPagamento" (onHide)="fecharModal()" [modal]="true"
+  [style]="{ width: '800px', height: '60vh' }">
+
+  <!-- Formulário -->
+  <form [formGroup]="formularioPagamento" (ngSubmit)="salvarPagamento()">
+
+    <div class="container">
+
+      <!-- BLOCO DA ESQUERDA: CAMPOS -->
+      <div class="campos">
+        <div class="mensagem">
+          @if (formularioPagamento.invalid && formularioPagamento.touched) {
+          <p-message severity="error" icon="pi pi-times-circle" styleClass="mb-2">A validação falhou!</p-message>
+          }
+        </div>
+
+        <!-- Valor -->
+        <div class="campo">
+          <p-inputNumber formControlName="valor" placeholder="Valor (R$)" mode="currency" 
+            currency="BRL" locale="pt-BR"
+            [invalid]="formularioPagamento.get('valor')?.invalid && formularioPagamento.get('valor')?.touched" />
+          @if (formularioPagamento.get('valor')?.invalid && formularioPagamento.get('valor')?.touched) {
+          <p-message severity="error" variant="simple" size="small">O valor é obrigatório</p-message>
+          }
+        </div>
+
+        <!-- Nome do Fiel -->
+        <div class="campo nome">
+          <input pInputText formControlName="nomeFiel" placeholder="Nome do Fiel"
+            [invalid]="formularioPagamento.get('nomeFiel')?.invalid && formularioPagamento.get('nomeFiel')?.touched" />
+          @if (formularioPagamento.get('nomeFiel')?.invalid && formularioPagamento.get('nomeFiel')?.touched) {
+          <p-message severity="error" variant="simple" size="small">O nome do fiel é obrigatório</p-message>
+          }
+        </div>
+
+      </div>
+
+      <!-- BLOCO DA DIREITA: BOTÕES -->
+      <div class="acoes">
+        <p-button label="Novo" [disabled]="!novoHabilitado" (onClick)="novoPagamento()"></p-button>
+        <p-button label="Alterar" [disabled]="!alterarHabilitado" (onClick)="editarPagamento()"></p-button>
+        <p-button label="Apagar" [disabled]="!apagarHabilitado" (onClick)="apagarPagamento()"></p-button>
+        <p-button label="Salvar" [disabled]="!salvarHabilitado" (onClick)="salvarPagamento()"></p-button>
+        <p-button label="Cancelar" [disabled]="!cancelarHabilitado" (onClick)="cancelarPagamento()"></p-button>
+        <p-button label="Fechar" [disabled]="!fecharHabilitado" (onClick)="fecharModal()"></p-button>
+      </div>
+
+    </div>
+  </form>
+</p-dialog>

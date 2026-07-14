@@ -1,4 +1,5 @@
 <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+
 <div class="topo-fiel">
     <p-button class="p-but" label="<" (onClick)="irParaTelaInicial()"></p-button>
 </div>
@@ -6,41 +7,64 @@
 <div class="pagina-fiel">
     <div class="card-fiel">
         <div class="titulo">
-            <h1>Cadastro de Fiéis</h1>
-            <p>Gerenciamento dos membros cadastrados.</p>
+            <h1>Cadastro de Pagamentos</h1>
+            <p>Gerenciamento dos pagamentos dos fiéis.</p>
         </div>
 
+        <!-- Barra superior -->
         <div class="barra-superior">
             <div class="campo-busca">
-                <label for="buscar">Buscar Fiel</label>
-                <!-- Ajustado para ler o value diretamente em tempo real -->
-                <input id="buscar" type="text" class="inpBuscar" placeholder="Digite o nome ou CPF" #inputNome
-                    (input)="pesquisar(inputNome.value)" (keyup.enter)="pesquisar(inputNome.value)">
+                <label for="buscar">Buscar Pagamento</label>
+                <input
+                    id="buscar"
+                    type="text"
+                    class="inpBuscar"
+                    placeholder="Digite o nome, CPF ou valor"
+                    #inputBusca
+                    (input)="pesquisar(inputBusca.value)"
+                    (keyup.enter)="pesquisar(inputBusca.value)">
             </div>
 
-            <!-- Passa o valor do input corretamente -->
-            <button class="btnPesquisar" (click)="pesquisar(inputNome.value)">
+            <button
+                class="btnPesquisar"
+                (click)="pesquisar(inputBusca.value)">
                 Pesquisar
             </button>
-            <p-button styleClass="btn" icon="pi pi-plus" label="Novo Fiel" (onClick)="novoFiel()">
+
+            <p-button
+                styleClass="btn"
+                icon="pi pi-plus"
+                label="Novo Pagamento"
+                (onClick)="novoPagamento()">
             </p-button>
         </div>
 
-        <div class="lista-fieis">
-            <!-- CORREÇÃO: Agora percorre a lista filtrada -->
-            @for (fiel of fieisFiltrados; track fiel.cpf) {
-            <div class="item-fiel" (dblclick)="selecionado(fiel)">
-                <div class="nome">{{ fiel.nome }}</div>
-                <div>{{ fiel.cpf }}</div>
-                <div>{{ fiel.telefone }}</div>
-                <div>{{ fiel.email }}</div>
-                <div>{{ fiel.cidade }}</div>
-            </div>
+        <!-- Lista de Pagamentos -->
+        <div class="lista-pagamentos">
+            @for (pagamento of pagamentosFiltrados; track pagamento.codPagamento) {
+                <div class="item-pagamento" 
+                     (dblclick)="selecionado(pagamento)"
+                     [class.selecionado]="pagamentoSelecionado.codPagamento === pagamento.codPagamento">
+                    
+                    <div class="nome">{{ pagamento.nomeFiel || '—' }}</div>
+                    <div class="cod">{{ pagamento.codPagamento || '—' }}</div>
+                    <div class="valor">R$ {{ pagamento.valor | number:'1.2-2' }}</div>
+                    <div class="tipo">{{ pagamento.tipo}}</div>
+                </div>
+            }
+
+            @if (pagamentosFiltrados.length === 0) {
+                <div class="sem-resultados">
+                    Nenhum pagamento encontrado.
+                </div>
             }
         </div>
     </div>
 </div>
 
-<app-pops [(visivel)]="exibirModalPrincipal" [fielSelecionado]="fielSelecionado" [alterar]="alterar">
-
-</app-pops>
+<!-- Modal -->
+<app-pops-pagamento
+    [(visivel)]="exibirModalPrincipal"
+    [pagamentoSelecionado]="pagamentoSelecionado"
+    [alterar]="alterar">
+</app-pops-pagamento>
