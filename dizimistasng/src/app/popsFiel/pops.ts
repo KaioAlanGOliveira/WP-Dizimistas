@@ -68,7 +68,7 @@ export class Pops implements OnChanges, OnInit {
       nome: [{ value: '', disabled: true }, [Validators.required, Validators.minLength(3)]],
       email: [{ value: '', disabled: true }, [Validators.email]],
       idade: [{ value: null, disabled: true }, [Validators.min(0), Validators.max(120)]],
-      telefone: [{ value: '', disabled: true }, [Validators.pattern(/^\(\d{2}\)\s\d{4,5}-\d{4}$/)]]
+      telefone: [{ value: '', disabled: true }]
     });
   }
 
@@ -81,6 +81,7 @@ export class Pops implements OnChanges, OnInit {
 
   // ==================== CONTROLE CENTRALIZADO ====================
   private atualizarEstadoUI(): void {
+    if (!this.formularioFiel) return;
     const isInitial = this.modo === 'initial';
 
     if (isInitial) {
@@ -121,7 +122,7 @@ export class Pops implements OnChanges, OnInit {
     return valor.toString().replace(/\D/g, '');
   }
 
-  sumeterFiel() {
+  salvar() {
     if (this.formularioFiel.invalid) {
       this.formularioFiel.markAllAsTouched();
       return;
@@ -136,9 +137,12 @@ export class Pops implements OnChanges, OnInit {
 
     if (this.modo === 'creating') {
       this.salvarNovo(payload);
+      this.fecharModal();
     } else {
       this.atualizarFiel(payload);
     }
+    this.modo = 'initial';
+    this.atualizarEstadoUI();
   }
 
   private salvarNovo(payload: FielList) {
@@ -163,8 +167,8 @@ export class Pops implements OnChanges, OnInit {
     if (!this.fielSelecionado?.cpf) return;
 
     this.fielService.apagarFiel(this.fielSelecionado).subscribe({
-      next: () => this.finalizarComSucesso(),
-      error: (err) => console.error('Erro ao apagar fiel:', err)
+      next: () => {this.finalizarComSucesso(); this.recarregarPaginaInteira();},
+      error: (err) => {this.finalizarComSucesso(); this.recarregarPaginaInteira();},
     });
   }
 
@@ -187,9 +191,13 @@ export class Pops implements OnChanges, OnInit {
     this.modo = 'initial';
     this.originalFiel = null;
     this.formularioFiel.reset();
-
+    this.recarregarPaginaInteira()
     this.visivel = false;
     this.visivelChange.emit(false);
+  }
+
+  recarregarPaginaInteira() {
+    window.location.reload();
   }
 
   private resetToInitialState() {

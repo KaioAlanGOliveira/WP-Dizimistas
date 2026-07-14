@@ -1,7 +1,7 @@
 <p-dialog header="Cadastro dos Fieis" [(visible)]="visivel" (onHide)="fecharModal()" [modal]="true"
   [style]="{ width: '800px', height: '60vh' }">
   <!-- Formulário envolve o container do grid -->
-  <form [formGroup]="formularioFiel" (ngSubmit)="sumeterFiel()">
+  <form [formGroup]="formularioFiel" (ngSubmit)="salvar()">
 
     <div class="container">
 
@@ -66,7 +66,7 @@
         <p-button label="Novo" [disabled]="!novoHabilitado" (onClick)="novoFiel()"></p-button>
         <p-button label="Alterar" [disabled]="!alterarHabilitado" (onClick)="editar()"></p-button>
         <p-button label="Apagar" [disabled]="!apagarHabilitado" (onClick)="apagar()"></p-button>
-        <p-button label="Salvar" [disabled]="!salvarHabilitado" (onClick)="sumeterFiel()"></p-button>
+        <p-button label="Salvar" [disabled]="!salvarHabilitado" (onClick)="salvar()"></p-button>
         <p-button label="Cancelar" [disabled]="!cancelarHabilitado" (onClick)="cancelar()"></p-button>
         <p-button label="Fechar" [disabled]="!fecharHabilitado" (onClick)="fecharModal()"></p-button>
       </div>

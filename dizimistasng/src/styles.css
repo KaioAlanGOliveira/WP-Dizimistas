@@ -4,4 +4,10 @@
 body {
     margin: 0;
     font-family: Arial, Helvetica, sans-serif;
+     background: radial-gradient(circle at top,
+        #e0b84d 0%,
+        #caa24a 20%,
+        #2b2b2b 55%,
+        #000000 100%);
+    min-height: 100vh;
 }

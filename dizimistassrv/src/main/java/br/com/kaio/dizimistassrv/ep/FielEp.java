@@ -1,6 +1,7 @@
 package br.com.kaio.dizimistassrv.ep;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
@@ -11,6 +12,7 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 
 import br.com.kaio.dizimistassrv.bss.FielBss;
 import br.com.kaio.dizimistassrv.domain.Fiel;
@@ -42,15 +44,14 @@ public class FielEp {
 	}
 
 	@DELETE
-	public String remover(Fiel fiel) {
+	public Response remover(Fiel fiel) {
 
 		try {
 			fielBss.remover(fiel);
-			return "Fiel removido do banco de dizimistas";
+			return Response.ok(Map.of("mensagem", "Fiel apagado com sucesso")).build();
 		} catch (Exception e) {
-			return "Não foi possivel fazer essa transação. Porque: " + e.getMessage();
+			return Response.serverError().entity(Map.of("erro", e.getMessage())).build();
 		}
-
 	}
 
 	@PUT

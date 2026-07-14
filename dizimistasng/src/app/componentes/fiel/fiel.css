@@ -1,5 +1,6 @@
 body{
-    background:#101010;
+     background: linear-gradient(135deg, #000000 0%, #1a1a1a 40%, #caa24a 100%);
+    min-height: 100vh;
 }
 
 .pagina-fiel{

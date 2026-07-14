@@ -8,7 +8,7 @@ import { TableModule } from 'primeng/table';
 import { FielService } from '../../service/fiel.service';
 import { FielList } from '../../domain/FielList.model';
 import { Router } from '@angular/router';
-import { Pops } from '../../pops/pops';
+import { Pops } from '../../popsFiel/pops';
 
 @Component({
   selector: 'app-fiel',

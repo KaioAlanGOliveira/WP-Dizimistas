@@ -14,7 +14,9 @@ export class FielService {
   constructor(private http: HttpClient) { }
 
   apagarFiel(fiel: FielList) {
-    return this.http.delete(this.apiUrl, { body: fiel });
+    return this.http.delete<{ mensagem: string }>(this.apiUrl, {
+      body: fiel
+    });
   }
 
   editarFiel(fiel: FielList) {

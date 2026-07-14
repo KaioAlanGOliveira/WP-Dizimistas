@@ -1,5 +1,6 @@
 body{
-    background:#101010;
+     background: linear-gradient(135deg, #000000 0%, #1a1a1a 40%, #caa24a 100%);
+    min-height: 100vh;
 }
 
 .pagina-fiel{
@@ -91,7 +92,7 @@ body{
 
 }
 
-.btnCadastrar{
+.btnCadastrar, .btnPesquisar{
 
     padding:12px 25px;
 
@@ -109,7 +110,7 @@ body{
 
 }
 
-.btnCadastrar:hover{
+.btnCadastrar, .btnPesquisar:hover{
 
     background:#e0ba67;
 
@@ -163,4 +164,14 @@ body{
 
     color:#d8b55b;
 
+}
+
+:host ::ng-deep .btn {
+    background: #caa24a !important;
+    border-color: #caa24a !important;
+    color: black !important;
+}
+
+:host ::ng-deep .btn:hover {
+    background: #e0ba67 !important;
 }
