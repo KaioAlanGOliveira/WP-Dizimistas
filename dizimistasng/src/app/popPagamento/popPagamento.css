@@ -1,0 +1,96 @@
+.container {
+  display: grid;
+  grid-template-columns: 1fr 210px;
+  gap: 30px;
+  padding: 25px;
+  background: #121212;
+  /* Fundo do container em preto charcoal */
+  border-radius: 12px;
+}
+
+/* --- CAMPOS DE ENTRADA DO FORMULÁRIO --- */
+.campos {
+  display: grid;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.campo {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.nome,
+.mensagem {
+  grid-column: 1 / -1;
+}
+
+/* Inputs elegantes com borda dourada subtil no foco */
+:host ::ng-deep input,
+:host ::ng-deep .p-inputmask,
+:host ::ng-deep .p-inputnumber,
+:host ::ng-deep .p-inputnumber input {
+  width: 100%;
+  background-color: #1a1a1a !important;
+  color: #ffffff !important;
+  border: 1px solid #333333 !important;
+  border-radius: 8px;
+  padding: 10px;
+  transition: 0.3s;
+}
+
+:host ::ng-deep input:focus,
+:host ::ng-deep .p-inputmask:focus,
+:host ::ng-deep .p-inputnumber input:focus {
+  border-color: #caa24a !important;
+  box-shadow: 0 0 8px rgba(202, 162, 74, 0.2) !important;
+}
+
+/* --- BLOCO DE AÇÕES E BOTÕES --- */
+.acoes {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+:host ::ng-deep .acoes .p-button {
+  width: 100%;
+  height: 48px;
+  font-size: 14px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  border-radius: 8px;
+  transition: all 0.25s ease-in-out;
+
+  /* Padrão Vermelho Escuro / Muted para todos os botões */
+  background: #1a1a1a;
+  border: 1px solid #caa24a;
+  color: #caa24a;
+}
+
+/* Efeito de elevação e mudança de cor ao passar o rato (Hover) para todos os botões */
+:host ::ng-deep .acoes .p-button:hover:not(:disabled) {
+  transform: translateY(-2px);
+  background: #1a1a1a;
+  border: 1px solid #caa24a;
+  color: #caa24a;
+}
+
+/* Estado Desativado Geral */
+:host ::ng-deep .acoes .p-button:disabled {
+  opacity: 0.4 !important;
+  cursor: not-allowed;
+  transform: none !important;
+  box-shadow: none !important;
+}
+
+/* --- SEPARAÇÃO VISUAL DOS BLOCOS --- */
+.btnEditar {
+  margin-top: 12px;
+}
+
+.btnApagar {
+  margin-top: 35px;
+}

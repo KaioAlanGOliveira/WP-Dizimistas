@@ -1,5 +1,4 @@
-export interface Pagamentos {
-  cpf: string;
+export interface PagamentosVw {
   codPagamento: number;
   valor?: number;
   tipo?: number;

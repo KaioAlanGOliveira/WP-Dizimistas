@@ -1,5 +1,5 @@
-<p-dialog header="Cadastro de Pagamentos" [(visible)]="visivelPagamento" (onHide)="fecharModal()" [modal]="true"
-  [style]="{ width: '800px', height: '60vh' }">
+<p-dialog header="Cadastro de Pagamentos" [(visible)]="visivel" (onHide)="fecharModal()" [modal]="true"
+  [style]="{ width: '700px', height: '60vh' }">
 
   <!-- Formulário -->
   <form [formGroup]="formularioPagamento" (ngSubmit)="salvarPagamento()">
@@ -8,29 +8,39 @@
 
       <!-- BLOCO DA ESQUERDA: CAMPOS -->
       <div class="campos">
-        <div class="mensagem">
-          @if (formularioPagamento.invalid && formularioPagamento.touched) {
-          <p-message severity="error" icon="pi pi-times-circle" styleClass="mb-2">A validação falhou!</p-message>
-          }
-        </div>
+        <label for="fiel">Fiel</label>
+        <p-autoComplete id="fiel" formControlName="nome" [suggestions]="fieisFiltrados"
+          (completeMethod)="buscarFieis($event)" [readonly]="true" field="nome"
+          placeholder="Digite o nome ou CPF do fiel..." [dropdown]="true" [showClear]="true"
+          optionLabel="nome"></p-autoComplete>
 
         <!-- Valor -->
         <div class="campo">
-          <p-inputNumber formControlName="valor" placeholder="Valor (R$)" mode="currency" 
-            currency="BRL" locale="pt-BR"
+          <label>Valor</label>
+          <p-inputNumber formControlName="valor" placeholder="Valor (R$)" mode="currency" currency="BRL" locale="pt-BR"
             [invalid]="formularioPagamento.get('valor')?.invalid && formularioPagamento.get('valor')?.touched" />
           @if (formularioPagamento.get('valor')?.invalid && formularioPagamento.get('valor')?.touched) {
           <p-message severity="error" variant="simple" size="small">O valor é obrigatório</p-message>
           }
         </div>
 
-        <!-- Nome do Fiel -->
-        <div class="campo nome">
-          <input pInputText formControlName="nomeFiel" placeholder="Nome do Fiel"
-            [invalid]="formularioPagamento.get('nomeFiel')?.invalid && formularioPagamento.get('nomeFiel')?.touched" />
-          @if (formularioPagamento.get('nomeFiel')?.invalid && formularioPagamento.get('nomeFiel')?.touched) {
-          <p-message severity="error" variant="simple" size="small">O nome do fiel é obrigatório</p-message>
-          }
+        <!-- Tipo do pagamento -->
+        <div class="campo tipo">
+
+          <div class="flex align-items-center gap-2">
+            <p-radiobutton name="tipo" formControlName="tipo" inputId="oferta" [value]="1">
+            </p-radiobutton>
+
+            <label for="oferta">Oferta</label>
+          </div>
+
+          <div class="flex align-items-center gap-2">
+            <p-radiobutton name="tipo" formControlName="tipo" inputId="dizimo" [value]="2">
+            </p-radiobutton>
+
+            <label for="dizimo">Dízimo</label>
+          </div>
+
         </div>
 
       </div>

@@ -44,6 +44,7 @@ public class FielBss {
 		try {
 			em.merge(fiel);
 		} catch (Exception e) {
+			e.printStackTrace();
 			throw new RuntimeException("Erro ao atualizado o fiel", e);
 		}
 	}

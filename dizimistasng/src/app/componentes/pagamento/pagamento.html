@@ -41,13 +41,11 @@
 
         <!-- Lista de Pagamentos -->
         <div class="lista-pagamentos">
-            @for (pagamento of pagamentosFiltrados; track pagamento.codPagamento) {
+            @for (pagamento of pagamentosFiltrados; track pagamento.id ?? pagamento.codPagamento ?? $index) {
                 <div class="item-pagamento" 
-                     (dblclick)="selecionado(pagamento)"
-                     [class.selecionado]="pagamentoSelecionado.codPagamento === pagamento.codPagamento">
-                    
-                    <div class="nome">{{ pagamento.nomeFiel || '—' }}</div>
-                    <div class="cod">{{ pagamento.codPagamento || '—' }}</div>
+                     (dblclick)="selecionado(pagamento)">
+                    <div class="nome">{{ pagamento.nome || '—' }}</div>
+                    <div class="cod">{{ pagamento.id.cpf || '—' }}</div>
                     <div class="valor">R$ {{ pagamento.valor | number:'1.2-2' }}</div>
                     <div class="tipo">{{ pagamento.tipo}}</div>
                 </div>
@@ -57,14 +55,15 @@
                 <div class="sem-resultados">
                     Nenhum pagamento encontrado.
                 </div>
+            } @else {
+                <p>Encontrados: {{pagamentosFiltrados.length}}  pagamentos cadastrados</p>
             }
+
         </div>
     </div>
 </div>
 
 <!-- Modal -->
-<app-pops-pagamento
-    [(visivel)]="exibirModalPrincipal"
-    [pagamentoSelecionado]="pagamentoSelecionado"
-    [alterar]="alterar">
-</app-pops-pagamento>
+<app-pops [(visivel)]="exibirModalPrincipal" [pagamentoSelecionado]="pagamentoSelecionado" [alterar]="alterar">
+
+</app-pops>

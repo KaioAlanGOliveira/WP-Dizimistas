@@ -13,12 +13,10 @@
         <div class="barra-superior">
             <div class="campo-busca">
                 <label for="buscar">Buscar Fiel</label>
-                <!-- Ajustado para ler o value diretamente em tempo real -->
                 <input id="buscar" type="text" class="inpBuscar" placeholder="Digite o nome ou CPF" #inputNome
                     (input)="pesquisar(inputNome.value)" (keyup.enter)="pesquisar(inputNome.value)">
             </div>
 
-            <!-- Passa o valor do input corretamente -->
             <button class="btnPesquisar" (click)="pesquisar(inputNome.value)">
                 Pesquisar
             </button>
@@ -27,7 +25,6 @@
         </div>
 
         <div class="lista-fieis">
-            <!-- CORREÇÃO: Agora percorre a lista filtrada -->
             @for (fiel of fieisFiltrados; track fiel.cpf) {
             <div class="item-fiel" (dblclick)="selecionado(fiel)">
                 <div class="nome">{{ fiel.nome }}</div>
@@ -41,6 +38,6 @@
     </div>
 </div>
 
-<app-pops [(visivel)]="exibirModalPrincipal" [fielSelecionado]="fielSelecionado" [alterar]="alterar">
+<app-pops [(visivel)]="exibirModalPrincipal" (visivelChange)="retornoPopUp($event)"  [fielSelecionado]="fielSelecionado" [alterar]="alterar">
 
 </app-pops>

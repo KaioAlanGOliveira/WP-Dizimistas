@@ -19,7 +19,7 @@ export class FielService {
     });
   }
 
-  editarFiel(fiel: FielList) {
+  editarFiel(fiel: FielList) { 
     return this.http.put(this.apiUrl, fiel);
   }
 

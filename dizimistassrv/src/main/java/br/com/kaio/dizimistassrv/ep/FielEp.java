@@ -55,13 +55,13 @@ public class FielEp {
 	}
 
 	@PUT
-	public String editar(Fiel fiel) {
+	public Response editar(Fiel fiel) {
 
 		try {
 			fielBss.aturar(fiel);
-			return "Fiel auterado do banco de dizimistas";
+			return Response.ok(Map.of("mensagem", "Fiel alterado com sucesso")).build();
 		} catch (Exception e) {
-			return "Não foi possivel fazer essa transação. Porque: " + e.getMessage();
+			return Response.serverError().entity(Map.of("erro", e.getMessage())).build();
 		}
 	}
 }

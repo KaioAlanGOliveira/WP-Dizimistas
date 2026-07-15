@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
@@ -8,17 +8,19 @@ import { TableModule } from 'primeng/table';
 import { FielService } from '../../service/fiel.service';
 import { FielList } from '../../domain/Fieis.model';
 import { Router } from '@angular/router';
-import { Pops } from '../../popsFiel/pops';
+import { PopsFiel } from '../../popsFiel/popsFiel';
+import { log } from 'console';
 
 @Component({
   selector: 'app-fiel',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, ButtonModule, InputTextModule, InputMaskModule, TableModule, Pops],
+  imports: [CommonModule, ReactiveFormsModule, ButtonModule, InputTextModule, InputMaskModule, TableModule, PopsFiel],
   templateUrl: './fiel.html',
   styleUrl: './fiel.css'
 })
 export class Fiel implements OnInit {
- 
+
+
   alterar: boolean = false;
   fielSelecionado!: FielList;
 
@@ -32,10 +34,18 @@ export class Fiel implements OnInit {
   // Começa falso para o pop-up iniciar fechado
   exibirModalPrincipal: boolean = false;
 
+  retornoPopUp(exib: boolean){
+
+    if(!exib){
+      this.carregarFieis();
+    }
+  }
+
   fieis: FielList[] = [];
   fieisFiltrados: any[] = []; // Guarda a lista que aparece na tela
 
   constructor(private fielService: FielService) { }
+
   private router = inject(Router);
 
   irParaTelaInicial() {
@@ -60,10 +70,13 @@ export class Fiel implements OnInit {
     this.carregarFieis();
   }
 
+
+
   carregarFieis(): void {
     this.fielService.listarTodos().subscribe({
       next: (dados) => {
-        this.fieis = dados; // Atualiza o ecrã com os dados vindos do Java
+        
+        this.fieis = dados; 
         this.fieisFiltrados = dados;
       },
       error: (erro) => {
@@ -90,7 +103,7 @@ export class Fiel implements OnInit {
     );
   }
 
-   novoFiel() {
+  novoFiel() {
     this.alterar = false;
     this.exibirModalPrincipal = true;
   }

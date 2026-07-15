@@ -24,10 +24,10 @@ import { FielService } from '../service/fiel.service';
     FormsModule,
     InputNumber
   ],
-  templateUrl: './pops.html',
-  styleUrl: './pops.css'
+  templateUrl: './popsFiel.html',
+  styleUrl: './popsFiel.css'
 })
-export class Pops implements OnChanges, OnInit {
+export class PopsFiel implements OnChanges, OnInit {
 
   fieis: FielList[] = [];
 
@@ -158,7 +158,10 @@ export class Pops implements OnChanges, OnInit {
     const atualizado: FielList = { ...this.fielSelecionado, ...payload };
 
     this.fielService.editarFiel(atualizado).subscribe({
-      next: () => this.finalizarComSucesso(),
+      next: (a) => {
+               console.log(a);   
+               this.finalizarComSucesso();  
+      },
       error: (err) => console.error('Erro ao atualizar fiel:', err)
     });
   }
@@ -183,15 +186,14 @@ export class Pops implements OnChanges, OnInit {
   }
 
   private finalizarComSucesso() {
-    this.carregarFieis();
     this.fecharModal();
+    this.carregarFieis();
   }
 
   fecharModal() {
     this.modo = 'initial';
     this.originalFiel = null;
     this.formularioFiel.reset();
-    this.recarregarPaginaInteira()
     this.visivel = false;
     this.visivelChange.emit(false);
   }

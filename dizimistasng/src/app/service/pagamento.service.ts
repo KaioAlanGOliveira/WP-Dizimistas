@@ -1,7 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Pagamentos } from '../domain/Pagamentos.model';
+import { Pagamento, Pagamentos } from '../domain/Pagamentos.model';
+import { PagamentosVw } from '../domain/PagamentosVw.model';
 
 @Injectable({
   providedIn: 'root'
@@ -9,7 +10,7 @@ import { Pagamentos } from '../domain/Pagamentos.model';
 export class PagamentoService {
 
   private apiUrl2 = 'http://26.143.248.8:8080/dizimistassrv/api/Pagamento';
-  private apiUrl = 'http://localhost:8080/dizimistassrv/api/Pagamento';
+  private apiUrl = 'http://localhost:8080/dizimistassrv/api/pagamento';
 
   constructor(private http: HttpClient) { }
 
@@ -23,11 +24,15 @@ export class PagamentoService {
     return this.http.put(this.apiUrl, Pagamento);
   }
 
-  salvarPagamento(Pagamento: Pagamentos): Observable<Pagamentos> {
-    return this.http.post<Pagamentos>(this.apiUrl, Pagamento);
+  salvarPagamento(Pagamento: Pagamento): Observable<Pagamento> {
+    return this.http.post<Pagamento>(this.apiUrl, Pagamento);
   }
 
   listarTodos(): Observable<Pagamentos[]> {
     return this.http.get<Pagamentos[]>(this.apiUrl);
+  }
+
+  listarTodosVw(): Observable<PagamentosVw[]> {
+    return this.http.get<PagamentosVw[]>(this.apiUrl);
   }
 }

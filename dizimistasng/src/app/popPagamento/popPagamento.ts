@@ -7,8 +7,12 @@ import { InputMaskModule } from 'primeng/inputmask';
 import { MessageModule } from 'primeng/message';
 import { InputTextModule } from 'primeng/inputtext';
 import { InputNumber } from "primeng/inputnumber";
-import { Pagamentos } from '../domain/Pagamentos.model';
+import { Pagamento, PagamentoId, Pagamentos } from '../domain/Pagamentos.model';
 import { PagamentoService } from '../service/pagamento.service';
+import { RadioButtonModule } from 'primeng/radiobutton';
+import { FielList } from '../domain/Fieis.model';
+import { FielService } from '../service/fiel.service';
+import { AutoCompleteModule } from 'primeng/autocomplete';
 
 @Component({
   selector: 'app-pops',
@@ -22,13 +26,19 @@ import { PagamentoService } from '../service/pagamento.service';
     MessageModule,
     InputTextModule,
     FormsModule,
-    InputNumber
+    InputNumber,
+    CommonModule,
+    ReactiveFormsModule,
+    RadioButtonModule,
+    AutoCompleteModule
   ],
-  templateUrl: './popPagamento.html' ,
+  templateUrl: './popPagamento.html',
   styleUrl: './popPagamento.css'
 })
-export class Pops implements OnChanges, OnInit {
-
+export class PopsPagamento implements OnChanges, OnInit {
+  [x: string]: any;
+  fieis: FielList[] = [];
+  fieisFiltrados: any[] = []; 
   formularioPagamento!: FormGroup;
 
   private modo: 'initial' | 'creating' | 'editing' = 'initial';
@@ -43,10 +53,14 @@ export class Pops implements OnChanges, OnInit {
   private pagamentoService = inject(PagamentoService);
 
   private originalPagamento: Pagamentos | null = null;
-visivelPagamento: any;
+  visivelPagamento: any;
+  tipoPagamento: any;
+
+  constructor(private fielService: FielService) { }
 
   ngOnInit() {
     this.initForm();
+    this.carregarFieis();
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -62,11 +76,11 @@ visivelPagamento: any;
 
   private initForm(): void {
     this.formularioPagamento = this.fb.group({
-      codigo: [{ value: '', disabled: true }, [Validators.required]],
-      valor: [{ value: null, disabled: true }, [Validators.required]],
-      data: [{ value: null, disabled: true }, [Validators.required]],
-      metodoPagamento: [{ value: '', disabled: true }, [Validators.required]],
-      nomeFiel: [{ value: '', disabled: true }, [Validators.required]]
+      codigo: [{ value: '', disabled: true }],
+      valor: [{ value: 0, disabled: true }, [Validators.required]],
+      tipoPagamento: [{ value: 1, disabled: true }, [Validators.required]],
+      nome: [''],
+      cpf: [''],
     });
   }
 
@@ -95,7 +109,10 @@ visivelPagamento: any;
   // ==================== AÇÕES ====================
   novoPagamento() {
     this.modo = 'creating';
-    this.formularioPagamento.reset();
+    this.formularioPagamento.reset({
+      tipo: 0,
+      valor: 0
+    });
     this.originalPagamento = null;
     this.atualizarEstadoUI();
   }
@@ -109,17 +126,31 @@ visivelPagamento: any;
   }
 
   salvarPagamento() {
+    
     if (this.formularioPagamento.invalid) {
       this.formularioPagamento.markAllAsTouched();
       return;
     }
 
     const formRaw = this.formularioPagamento.getRawValue();
-    const payload: Pagamentos = { ...formRaw };
+    const pg: Pagamento = new Pagamento();
+    
+    const koko:any = this.formularioPagamento.get('nome')?.getRawValue();
+
+    pg.id = new PagamentoId();
+    pg.id.cpf = koko['cpf'];
+    pg.tipo = this.formularioPagamento.get('tipo')?.getRawValue();
+    pg.valor = this.formularioPagamento.get('valor')?.getRawValue();
+    console.log(this.formularioPagamento.get('tipo'));
+    
+
+    const payload: Pagamento = { ...pg };
+    
 
     if (this.modo === 'creating') {
       this.salvarNovo(payload);
-      this.fecharModal();
+      // this.fecharModal();
+      // this.recarregarPaginaInteira();
     } else {
       this.atualizarPagamento(payload);
     }
@@ -127,14 +158,14 @@ visivelPagamento: any;
     this.atualizarEstadoUI();
   }
 
-  private salvarNovo(payload: Pagamentos) {
+  private salvarNovo(payload: Pagamento) {
     this.pagamentoService.salvarPagamento(payload).subscribe({
       next: () => this.finalizarComSucesso(),
       error: (err) => console.error('Erro ao salvar pagamento:', err)
     });
   }
 
-  private atualizarPagamento(payload: Pagamentos) {
+  private atualizarPagamento(payload: Pagamento) {
     if (!this.pagamentoSelecionado) return;
 
     const atualizado: Pagamentos = { ...this.pagamentoSelecionado, ...payload };
@@ -149,14 +180,15 @@ visivelPagamento: any;
     if (!this.pagamentoSelecionado?.codPagamento) return;
 
     this.pagamentoService.apagarPagamento(this.pagamentoSelecionado).subscribe({
-      next: () => {this.finalizarComSucesso(); this.recarregarPaginaInteira();},
-      error: (err) => {this.finalizarComSucesso(); this.recarregarPaginaInteira();},
+      next: () => { this.finalizarComSucesso(); this.recarregarPaginaInteira(); },
+      error: (err) => { this.finalizarComSucesso(); this.recarregarPaginaInteira(); },
     });
   }
 
   cancelarPagamento() {
     if (this.modo === 'creating') {
       this.fecharModal();
+      this.recarregarPaginaInteira();
     } else if (this.modo === 'editing' && this.originalPagamento) {
       this.formularioPagamento.patchValue(this.originalPagamento);
       this.modo = 'initial';
@@ -172,7 +204,6 @@ visivelPagamento: any;
     this.modo = 'initial';
     this.originalPagamento = null;
     this.formularioPagamento.reset();
-    this.recarregarPaginaInteira()
     this.visivel = false;
     this.visivelChange.emit(false);
   }
@@ -189,4 +220,26 @@ visivelPagamento: any;
     }
     this.atualizarEstadoUI();
   }
+
+  carregarFieis(): void {
+    this.fielService.listarTodos().subscribe({
+      next: (dados) => {
+        this.fieis = dados; // Atualiza o ecrã com os dados vindos do Java
+        this.fieisFiltrados = dados;
+      },
+      error: (erro) => {
+        console.error('Erro ao buscar fiéis do Java:', erro);
+      }
+    });
+  }
+
+  buscarFieis(event: any) {
+    const busca = event.query.toLowerCase().trim();
+
+    this.fieisFiltrados = this.fieis.filter(fiel =>
+      fiel.nome?.toLowerCase().includes(busca) ||
+      fiel.cpf?.includes(busca)
+    );
+  }
+
 }
