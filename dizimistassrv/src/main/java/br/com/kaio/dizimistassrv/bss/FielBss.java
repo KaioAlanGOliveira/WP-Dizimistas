@@ -39,7 +39,7 @@ public class FielBss {
 		}
 	}
 
-	public void aterar(Fiel fiel) {
+	public void alterar(Fiel fiel) {
 
 		try {
 			em.merge(fiel);
