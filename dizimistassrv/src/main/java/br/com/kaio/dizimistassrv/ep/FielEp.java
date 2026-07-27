@@ -58,7 +58,7 @@ public class FielEp {
 	public Response editar(Fiel fiel) {
 
 		try {
-			fielBss.aturar(fiel);
+			fielBss.alterar(fiel);
 			return Response.ok(Map.of("mensagem", "Fiel alterado com sucesso")).build();
 		} catch (Exception e) {
 			return Response.serverError().entity(Map.of("erro", e.getMessage())).build();
